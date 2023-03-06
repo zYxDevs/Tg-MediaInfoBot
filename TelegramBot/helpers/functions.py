@@ -63,12 +63,11 @@ def get_readable_bitrate(bitrate_kbps):
     Return a human-readable bitrate size.
     """
     
-    if bitrate_kbps > 10000:
-        bitrate = str(round(bitrate_kbps / 1000, 2)) + ' ' + 'Mb/s'
-    else:
-        bitrate = str(round(bitrate_kbps, 2)) + ' ' + 'kb/s'
-
-    return bitrate
+    return (
+        f'{str(round(bitrate_kbps / 1000, 2))} Mb/s'
+        if bitrate_kbps > 10000
+        else f'{str(round(bitrate_kbps, 2))} kb/s'
+    )
 
 
 def remove_N(seq):
@@ -101,7 +100,7 @@ def check_and_convert_time(time: str):
     """
     
     try:
-        time = str(time)
+        time = time
         hours, minutes, seconds = map(int, time.split(':'))
         if 0 <= hours <= 23 and 0 <= minutes <= 59 and 0 <= seconds <= 59:
             return int(3600 * hours + 60 * minutes + seconds)

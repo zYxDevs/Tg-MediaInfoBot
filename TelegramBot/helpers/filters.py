@@ -10,15 +10,12 @@ def authorized(_, __, message: Message) -> bool:
     """
      
     if not message.from_user:
-        return False         
+        return False
     if 0 in AUTHORIZED_CHATS:
     	return True
     if message.chat.id in AUTHORIZED_CHATS:
-    	return True    	           
-    if message.from_user.id in SUDO_USERID:
     	return True
-
-    return False
+    return message.from_user.id in SUDO_USERID
   
       
 def sudo_users(_, __, message: Message) -> bool:
@@ -26,12 +23,7 @@ def sudo_users(_, __, message: Message) -> bool:
     returns True if message is from sudo user, False otherwise. 
     """
      
-    if not message.from_user:
-        return False              
-    if message.from_user.id in SUDO_USERID:
-    	return True	
-    	
-    return False
+    return message.from_user.id in SUDO_USERID if message.from_user else False
  
        
 check_auth = filters.create(authorized)
